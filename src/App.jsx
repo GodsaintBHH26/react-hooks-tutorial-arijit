@@ -1,24 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
 function App() {
 
-  const [count, setCount] = useState(0);
-  // useEffect(()=>{
-  //   setTimeout(() => {
-  //     setCount(count+1);
-  //   }, 1000);
-  // });
+  const [value, setValue] = useState(0);
+  const count = useRef(0);
+
+  const increaseCount = ()=>{
+    setValue((prev)=>{
+     return prev+1
+    })
+  }
+  const decreaseCount = ()=>{
+    setValue((prev)=>{
+     return prev-1
+    })
+  }
 
   useEffect(()=>{
-    setTimeout(() => {
-      setCount(count+1);
-    }, 1000);
-  }, []);
+    count.current = count.current+1;
+  })
+
+  console.log(count);
 
   return (
     <>
-      <h1>I've rendered the page {count} times</h1>
+      <button onClick={decreaseCount}>-1</button>
+      <h1>{value}</h1>
+      <button onClick={increaseCount}>+1</button>
+
+      <h1>Render Count : {count.current}</h1>
     </>
   )
 }
